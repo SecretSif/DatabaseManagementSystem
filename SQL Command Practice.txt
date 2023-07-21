@@ -1,0 +1,288 @@
+C:\Users\Ariful Rahman>cd\
+
+C:\>cd xampp
+
+C:\xampp>cd mysql
+
+C:\xampp\mysql>cd bin
+
+C:\xampp\mysql\bin>mysql -u root -p -h 127.0.0.1
+
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 146
+Server version: 10.4.28-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+
+MariaDB [(none)]> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| test               |
++--------------------+
+5 rows in set (0.032 sec)
+
+MariaDB [(none)]> CREATE DATABASE DIU;
+Query OK, 1 row affected (0.002 sec)
+
+MariaDB [(none)]> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| diu                |
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| test               |
++--------------------+
+6 rows in set (0.001 sec)
+
+
+MariaDB [(none)]> USE DIU;
+Database changed
+
+MariaDB [DIU]> CREATE TABLE student_details(
+    -> PRIMARY KEY(ROLL),
+    -> ROLL int,
+    -> Name varchar(10),
+    -> Gender varchar(10),
+    -> Age int,
+    -> GPA double(3,2),
+    -> City varchar(10)
+    -> );
+
+
+MariaDB [DIU]> INSERT INTO student_details
+    -> VALUES
+    -> (101,'Rahim','Male',18,3.44,'Sylhet'),
+    -> (102,'Hasina','Female',17,4.50,'Dhaka'),
+    -> (103,'Sabul','Male',18,3.70,'Sylhet'),
+    -> (104,'Suhan','Male',17,4.75,'Khulna'),
+    -> (105,'Tanvir','Male',17,4.50,'Sylhet');
+Query OK, 5 rows affected (0.088 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+
+MariaDB [DIU]> SHOW TABLES;
++-----------------+
+| Tables_in_diu   |
++-----------------+
+| student_details |
++-----------------+
+1 row in set (0.001 sec)
+
+
+MariaDB [DIU]> describe student_details;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| ROLL   | int(11)     | NO   | PRI | NULL    |       |
+| Name   | varchar(10) | YES  |     | NULL    |       |
+| Gender | varchar(10) | YES  |     | NULL    |       |
+| Age    | int(11)     | YES  |     | NULL    |       |
+| GPA    | double(3,2) | YES  |     | NULL    |       |
+| City   | varchar(10) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+6 rows in set (0.029 sec)
+
+MariaDB [DIU]> SELECT * from student_details;
++------+--------+--------+------+------+--------+
+| ROLL | Name   | Gender | Age  | GPA  | City   |
++------+--------+--------+------+------+--------+
+|  101 | Rahim  | Male   |   18 | 3.44 | Sylhet |
+|  102 | Hasina | Female |   17 | 4.50 | Dhaka  |
+|  103 | Sabul  | Male   |   18 | 3.70 | Sylhet |
+|  104 | Suhan  | Male   |   17 | 4.75 | Khulna |
+|  105 | Tanvir | Male   |   17 | 4.50 | Sylhet |
++------+--------+--------+------+------+--------+
+5 rows in set (0.001 sec)
+
+
+
+MariaDB [DIU]> DELETE FROM student_details WHERE ROLL=103;
+Query OK, 1 row affected (0.075 sec)
+
+MariaDB [DIU]> SELECT * FROM student_details;
++------+--------+--------+------+------+--------+
+| ROLL | Name   | Gender | Age  | GPA  | City   |
++------+--------+--------+------+------+--------+
+|  101 | Rahim  | Male   |   18 | 3.44 | Sylhet |
+|  102 | Hasina | Female |   17 | 4.50 | Dhaka  |
+|  104 | Suhan  | Male   |   17 | 4.75 | Khulna |
+|  105 | Tanvir | Male   |   17 | 4.50 | Sylhet |
++------+--------+--------+------+------+--------+
+4 rows in set (0.001 sec)
+
+
+
+MariaDB [DIU]> SELECT ROLL, Name, GPA FROM student_details;
++------+--------+------+
+| ROLL | Name   | GPA  |
++------+--------+------+
+|  101 | Rahim  | 3.44 |
+|  102 | Hasina | 4.50 |
+|  104 | Suhan  | 4.75 |
+|  105 | Tanvir | 4.50 |
++------+--------+------+
+4 rows in set (0.003 sec)
+
+
+
+MariaDB [DIU]> SELECT ROLL, Name, GPA FROM student_details WHERE GPA>4.00;
++------+--------+------+
+| ROLL | Name   | GPA  |
++------+--------+------+
+|  102 | Hasina | 4.50 |
+|  104 | Suhan  | 4.75 |
+|  105 | Tanvir | 4.50 |
++------+--------+------+
+3 rows in set (0.015 sec)
+
+
+
+MariaDB [DIU]> SELECT ROLL, Name, GPA FROM student_details WHERE Gender='Female';
++------+--------+------+
+| ROLL | Name   | GPA  |
++------+--------+------+
+|  102 | Hasina | 4.50 |
++------+--------+------+
+1 row in set (0.016 sec)
+
+
+
+MariaDB [DIU]> SELECT ROLL, Name, Gender, Age, GPA, City from student_details ORDER BY GPA desc;
++------+--------+--------+------+------+--------+
+| ROLL | Name   | Gender | Age  | GPA  | City   |
++------+--------+--------+------+------+--------+
+|  104 | Suhan  | Male   |   17 | 4.75 | Khulna |
+|  102 | Hasina | Female |   17 | 4.50 | Dhaka  |
+|  105 | Tanvir | Male   |   17 | 4.50 | Sylhet |
+|  101 | Rahim  | Male   |   18 | 3.44 | Sylhet |
++------+--------+--------+------+------+--------+
+4 rows in set (0.001 sec)
+
+
+
+MariaDB [DIU]> SELECT * FROM student_details WHERE City='Sylhet';
++------+--------+--------+------+------+--------+
+| ROLL | Name   | Gender | Age  | GPA  | City   |
++------+--------+--------+------+------+--------+
+|  101 | Rahim  | Male   |   18 | 3.44 | Sylhet |
+|  105 | Tanvir | Male   |   17 | 4.50 | Sylhet |
++------+--------+--------+------+------+--------+
+2 rows in set (0.001 sec)
+
+
+
+MariaDB [DIU]> UPDATE student_details SET GPA=5.00 WHERE ROLL=102;
+Query OK, 1 row affected (0.033 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [DIU]> SELECT * FROM student_details;
++------+--------+--------+------+------+--------+
+| ROLL | Name   | Gender | Age  | GPA  | City   |
++------+--------+--------+------+------+--------+
+|  101 | Rahim  | Male   |   18 | 3.44 | Sylhet |
+|  102 | Hasina | Female |   17 | 5.00 | Dhaka  |
+|  104 | Suhan  | Male   |   17 | 4.75 | Khulna |
+|  105 | Tanvir | Male   |   17 | 4.50 | Sylhet |
++------+--------+--------+------+------+--------+
+4 rows in set (0.001 sec)
+
+
+
+
+MariaDB [DIU]> SELECT * FROM student_details;
++------+--------+--------+------+------+--------+
+| ROLL | Name   | Gender | Age  | GPA  | City   |
++------+--------+--------+------+------+--------+
+|  101 | Rahim  | Male   |   18 | 3.44 | Sylhet |
+|  102 | Hasina | Female |   17 | 5.00 | Dhaka  |
+|  104 | Suhan  | Male   |   17 | 4.75 | Khulna |
+|  105 | Tanvir | Male   |   17 | 4.50 | Sylhet |
++------+--------+--------+------+------+--------+
+4 rows in set (0.152 sec)
+
+MariaDB [DIU]> SELECT COUNT(ROLL) as NUMBER, City FROM student_details
+    -> GROUP BY City;
++--------+--------+
+| NUMBER | City   |
++--------+--------+
+|      1 | Dhaka  |
+|      1 | Khulna |
+|      2 | Sylhet |
++--------+--------+
+3 rows in set (0.001 sec)
+
+
+MariaDB [DIU]> SELECT COUNT(ROLL) FROM student_details WHERE City='Sylhet';
++-------------+
+| COUNT(ROLL) |
++-------------+
+|           2 |
++-------------+
+1 row in set (0.001 sec)
+
+
+
+MariaDB [DIU]> SELECT MIN(GPA) FROM student_details;
++----------+
+| MIN(GPA) |
++----------+
+|     3.44 |
++----------+
+1 row in set (0.001 sec)
+
+
+
+MariaDB [DIU]> SELECT MAX(GPA) FROM student_details;
++----------+
+| MAX(GPA) |
++----------+
+|     5.00 |
++----------+
+1 row in set (0.000 sec)
+
+
+
+MariaDB [DIU]> SELECT AVG(GPA) FROM student_details;
++----------+
+| AVG(GPA) |
++----------+
+| 4.422500 |
++----------+
+1 row in set (0.000 sec)
+
+
+
+MariaDB [DIU]> SELECT AVG(GPA) as Average_GPA FROM student_details;
++-------------+
+| Average_GPA |
++-------------+
+|    4.422500 |
++-------------+
+1 row in set (0.001 sec)
+
+
+MariaDB [DIU]> SELECT ROLL, Name, Gender, GPA, City FROM student_details WHERE GPA BETWEEN 3.00 AND 4.25;
++------+-------+--------+------+--------+
+| ROLL | Name  | Gender | GPA  | City   |
++------+-------+--------+------+--------+
+|  101 | Rahim | Male   | 3.44 | Sylhet |
++------+-------+--------+------+--------+
+1 row in set (0.001 sec)
+
+
+
+
+
+
